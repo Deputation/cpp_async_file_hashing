@@ -31,9 +31,9 @@ namespace dir_queue
 	{
 		const auto position = file.path.find_last_of('\\');
 		const auto file_name = file.path.substr(position + 1);
-		const auto hash = utils::get_file_hash_md5(file.handle);
+		const auto md5_hash = utils::get_file_hash_md5(file.handle);
 
-		data.push_back(file_name + " : " + hash);
+		data.push_back(file_name + " md5: " + md5_hash);
 
 		hashed_files++;
 	}

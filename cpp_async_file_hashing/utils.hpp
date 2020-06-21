@@ -71,7 +71,6 @@ namespace utils
 				hash.push_back(hash_digits[rgb_hash[i] >> 4]);
 				hash.push_back(hash_digits[rgb_hash[i] & 0xf]);
 			}
-			hash.push_back('\x00');
 		}
 		else
 		{
