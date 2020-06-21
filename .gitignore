@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+/.vs
+/cpp_async_file_hashing/x64/Release
+/x64/Release
