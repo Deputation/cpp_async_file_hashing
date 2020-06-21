@@ -97,12 +97,7 @@ namespace utils
 			const auto full_path = std::string(wfull_path_buffer.begin(), wfull_path_buffer.end());
 			const HANDLE handle = CreateFile(entry.path().c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-			// the name can be derived from the handle but the function is
-			// unnecessarily huge, let's process the string instead.
-			const auto name_buffer = full_path;
-
-			// function running in unvirtualized context
-			function(handle, name_buffer);
+			function(handle, full_path);
 		}
 	}
 }
