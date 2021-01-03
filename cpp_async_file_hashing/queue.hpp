@@ -62,14 +62,17 @@ namespace dir_queue
 		hashed_files = 0;
 	}
 
-	// print all the hashes
-	void print_hashes()
+	// wait until all the futures are done
+	void wait_for_hashing()
 	{
 		using namespace std::chrono_literals;
 
-		// wait until it's done
 		while (hashed_files != hashing_futures.size()) std::this_thread::sleep_for(0ms);
+	}
 
+	// print hashes and files
+	void print_results()
+	{
 		for (const auto& string : data)
 		{
 			std::cout << string << std::endl;
