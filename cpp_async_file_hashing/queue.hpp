@@ -9,6 +9,7 @@ namespace dir_queue
 	std::vector<std::future<void>> hashing_futures;
 	
 	// store hashes and file names, prepare for outputting
+	std::mutex string_data_mutex;
 	std::vector<std::string> data;
 
 	// keep an eye on how many files we've hashed correctly so far
@@ -33,7 +34,11 @@ namespace dir_queue
 		const auto file_name = file.path.substr(position + 1);
 		const auto md5_hash = utils::get_file_hash_md5(file.handle);
 
+		string_data_mutex.lock();
+
 		data.push_back(file_name + " md5: " + md5_hash);
+
+		string_data_mutex.unlock();
 
 		hashed_files++;
 	}
@@ -67,7 +72,23 @@ namespace dir_queue
 	{
 		using namespace std::chrono_literals;
 
-		while (hashed_files != hashing_futures.size()) std::this_thread::sleep_for(0ms);
+		while (true)
+		{
+			string_data_mutex.lock();
+
+			auto are_files_not_done_hashing = (hashed_files != hashing_futures.size());
+
+			string_data_mutex.unlock();
+
+			if (are_files_not_done_hashing)
+			{
+				std::this_thread::sleep_for(0ms);
+			}
+			else
+			{
+				break;
+			}
+		}
 	}
 
 	// print hashes and files
