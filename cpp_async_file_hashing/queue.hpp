@@ -13,7 +13,7 @@ namespace dir_queue
 	std::vector<std::string> data;
 
 	// keep an eye on how many files we've hashed correctly so far
-	int hashed_files = 0;
+	volatile int hashed_files = 0;
 
 	// queue a directory containing files for hashing
 	void queue_up(const std::string& directory = ".\\")
