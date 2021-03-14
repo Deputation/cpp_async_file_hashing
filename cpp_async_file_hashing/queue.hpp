@@ -38,9 +38,9 @@ namespace dir_queue
 
 		data.push_back(file_name + " md5: " + md5_hash);
 
-		string_data_mutex.unlock();
-
 		hashed_files++;
+
+		string_data_mutex.unlock();
 	}
 
 	// prepare and launch all the futures
